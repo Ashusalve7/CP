@@ -1,0 +1,12 @@
+create database DML;
+use DML;
+create table student_info(id int, student_name varchar(20), class varchar(5));
+INSERT INTO student_info (id, student_name, class)
+VALUES (1, 'abc', 'btech');
+INSERT INTO student_info (id, student_name, class)
+VALUES (2, 'xyz', 'btech');
+UPDATE student_info
+SET class = 'mtech'
+WHERE id = 2;
+delete from student_info where id = 2;
+select * from student_info;
