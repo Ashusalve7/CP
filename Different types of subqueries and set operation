@@ -1,0 +1,144 @@
+CREATE DATABASE Sub_queries;
+
+USE Sub_queries;
+
+# Drop existing tables if they exist to avoid conflicts
+DROP TABLE IF EXISTS emp_a, emp_b, emp_c, emp_d, emp_e, emp_f, dept;
+
+# Simple queries
+CREATE TABLE emp_a (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    sal DECIMAL(10, 2) NOT NULL
+);
+
+INSERT INTO emp_a (emp_id, emp_name, sal) VALUES
+(1, 'JHONS', 5000.00),
+(2, 'ALICE', 6000.00),
+(3, 'BOB', 7000.00),
+(4, 'DIANA', 5500.00),
+(5, 'CHARLIE', 4500.00);
+
+Select * from emp_a 
+Where sal>(Select sal from emp_a
+	   where emp_name='JHONS');
+
+# Multiple row subquery
+CREATE TABLE emp_b (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    sal DECIMAL(10, 2) NOT NULL,
+    dept_no INT NOT NULL
+);
+
+INSERT INTO emp_b (emp_id, emp_name, sal, dept_no) VALUES
+(1, 'JHONS', 5000.00, 10),
+(2, 'ALICE', 6000.00, 20),
+(3, 'BOB', 7000.00, 10),
+(4, 'DIANA', 5500.00, 30),
+(5, 'EVE', 4000.00, 10),
+(6, 'FRANK', 8000.00, 20),
+(7, 'GRACE', 4500.00, 30),
+(8, 'HANK', 4800.00, 10),
+(9, 'IVY', 3000.00, 20),
+(10, 'JACK', 6000.00, 10);
+
+SELECT *
+FROM emp_b
+WHERE sal > ANY (SELECT sal FROM emp_b WHERE dept_no = 10);
+
+# Multiple subqueries
+CREATE TABLE dept (
+    dept_no INT PRIMARY KEY,
+    d_name VARCHAR(50) NOT NULL,
+    location VARCHAR(50)
+);
+
+INSERT INTO dept (dept_no, d_name, location) VALUES
+(10, 'Accountancy', 'New York'),
+(20, 'HR', 'London'),
+(30, 'Engineering', 'San Francisco'),
+(40, 'Sales', 'Chicago');
+
+CREATE TABLE emp_c (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    job VARCHAR(50) NOT NULL,
+    dept_no INT NOT NULL,
+    FOREIGN KEY (dept_no) REFERENCES dept(dept_no)
+);
+
+INSERT INTO emp_c (emp_id, emp_name, job, dept_no) VALUES
+(1, 'John', 'Clerk', 10),
+(2, 'Alice', 'Manager', 10),
+(3, 'Bob', 'Engineer', 30),
+(4, 'Diana', 'HR Specialist', 20),
+(5, 'Eve', 'Salesperson', 40);
+
+CREATE TABLE emp_d (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    job VARCHAR(50) NOT NULL,
+    dept_no INT
+);
+
+INSERT INTO emp_d (emp_id, emp_name, job, dept_no) VALUES
+(11, 'Frank', 'Clerk', NULL),
+(12, 'Grace', 'Manager', NULL),
+(13, 'Hank', 'Engineer', NULL),
+(14, 'Ivy', 'HR Specialist', NULL),
+(15, 'Jack', 'Salesperson', NULL);
+
+SELECT *
+FROM emp_d
+WHERE job IN (
+    SELECT job
+    FROM emp_c
+    WHERE dept_no = (
+        SELECT dept_no
+        FROM dept
+        WHERE d_name = 'Accountancy'
+    )
+);
+
+# Correlated subquery
+CREATE TABLE emp_e (
+    emp_id INT PRIMARY KEY,
+    ename VARCHAR(50) NOT NULL,
+    sal DECIMAL(10, 2) NOT NULL,
+    dept_no INT NOT NULL
+);
+
+INSERT INTO emp_e (emp_id, ename, sal, dept_no) VALUES
+(1, 'John', 5000.00, 10),
+(2, 'Alice', 6000.00, 20),
+(3, 'Bob', 7000.00, 10),
+(4, 'Diana', 5500.00, 30),
+(5, 'Eve', 4000.00, 10),
+(6, 'Frank', 8000.00, 20),
+(7, 'Grace', 4500.00, 30),
+(8, 'Hank', 4800.00, 10),
+(9, 'Ivy', 3000.00, 20),
+(10, 'Jack', 6000.00, 30);
+
+CREATE TABLE emp_f (
+    emp_id INT PRIMARY KEY,
+    ename VARCHAR(50) NOT NULL,
+    sal DECIMAL(10, 2) NOT NULL,
+    dept_no INT NOT NULL
+);
+
+INSERT INTO emp_f (emp_id, ename, sal, dept_no) VALUES
+(11, 'Clark', 5200.00, 10),
+(12, 'Laura', 6500.00, 20),
+(13, 'Mike', 7200.00, 10),
+(14, 'Sophia', 5600.00, 30),
+(15, 'Oliver', 4100.00, 10);
+
+SELECT ename, sal, dept_no
+FROM emp_f
+WHERE sal > (
+    SELECT AVG(sal)
+    FROM emp_e
+    WHERE dept_no = emp_f.dept_no
+);
