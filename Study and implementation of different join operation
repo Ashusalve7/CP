@@ -1,0 +1,89 @@
+#initializaiton
+create database Different_Joins;
+use Different_Joins;
+drop table products,categories;
+#
+
+create table products( productid int, productname varchar(10), category_id int,price int);
+INSERT INTO products (productid, productname, category_id, price) VALUES
+(1, 'Laptop', 1, 1000),
+(2, 'Phone', 2, 500),
+(3, 'Tablet', 2, 300),
+(4, 'Monitor', 3, 200),
+(5, 'Keyboard', 4, 50),
+(6, 'Mouse', 4, 30),
+(7, 'Printer', 5, 150),
+(8, 'Speaker', 6, 100),
+(9, 'Webcam', 6, 70),
+(10, 'Router', 7, 120);
+create table categories(category_id int, category_name varchar(20), category_description varchar(50));
+INSERT INTO categories (category_id, category_name, category_description) VALUES
+(1, 'Computers', 'Devices for computing'),
+(2, 'Mobile Devices', 'Handheld devices'),
+(3, 'Displays', 'Monitors and screens'),
+(4, 'Peripherals', 'Keyboards and mice'),
+(5, 'Printing', 'Printers and scanners'),
+(6, 'Audio', 'Speakers and sound systems'),
+(7, 'Networking', 'Routers and modems'),
+(8, 'Storage', 'Hard drives and USBs'),
+(9, 'Accessories', 'Computer accessories'),
+(10, 'Gaming', 'Gaming consoles and controllers');
+select * from products;
+select * from categories;
+
+#Inner join
+use exp_7;
+SELECT p.productid, p.productname, c.category_name
+FROM products p
+INNER JOIN categories c
+ON p.category_id = c.category_id;
+
+#Equi-join
+use exp_7;
+SELECT p.productid, p.productname, c.category_name
+FROM products p, categories c
+WHERE p.category_id = c.category_id;
+
+#Non equi-join
+use exp_7;
+SELECT p.productname, p.price, c.category_name
+FROM products p
+JOIN categories c
+ON p.price < 100;
+
+
+#Self-join
+use exp_7;
+SELECT c1.category_id AS Parent, c2.category_id AS Child
+FROM categories c1
+JOIN categories c2
+ON c1.category_id < c2.category_id;
+
+#Left Outer join
+use exp_7;
+SELECT p.productid, p.productname, c.category_name
+FROM products p
+LEFT OUTER JOIN categories c
+ON p.category_id = c.category_id;
+
+
+#Right Outer join
+use exp_7;
+SELECT p.productid, p.productname, c.category_name
+FROM products p
+RIGHT OUTER JOIN categories c
+ON p.category_id = c.category_id;
+
+#Full Outer join
+use exp_7;
+SELECT p.productid, p.productname, c.category_name
+FROM products p
+LEFT JOIN categories c
+ON p.category_id = c.category_id
+
+UNION
+
+SELECT p.productid, p.productname, c.category_name
+FROM products p
+RIGHT JOIN categories c
+ON p.category_id = c.category_id;
