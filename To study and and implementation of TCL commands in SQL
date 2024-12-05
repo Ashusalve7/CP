@@ -1,0 +1,32 @@
+create database TCL;
+use TCL;
+create table school(id int,school_name varchar(40),
+                    number_of_student int, number_of_teachers int, number_of_classrooms int,
+                    emailid varchar(40));
+start transaction;
+select * from school;
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (1, 'Green Valley High School', 500, 30, 25, 'contact@gvhs.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (2, 'Blue Mountain Academy', 800, 45, 35, 'info@bma.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (3, 'Sunshine Public School', 600, 40, 28, 'admin@sunshine.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (4, 'Riverdale International', 1000, 60, 40, 'office@riverdaleint.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (5, 'Pine Hill School', 300, 25, 20, 'contact@pinehill.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (6, 'Springfield High', 700, 50, 30, 'info@springfieldhigh.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (7, 'Lakeside Academy', 550, 38, 26, 'contact@lakeside.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (8, 'Hilltop Primary School', 400, 22, 18, 'info@hilltop.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (9, 'Cedarwood Academy', 950, 55, 42, 'admin@cedarwood.edu');
+INSERT INTO school (id, school_name, number_of_student, number_of_teachers, number_of_classrooms, emailid)
+VALUES (10, 'Elmwood International School', 1200, 70, 50, 'office@elmwood.edu');
+
+commit;
+set autocommit = 0;
+savepoint save;
+rollback to savepoint save;
