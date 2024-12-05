@@ -1,0 +1,8 @@
+create database DDL;
+use DDL;
+create table student_info(id int, student_name varchar(20),class varchar(5));
+desc student_info;
+alter table student_info add (ph_no int);
+alter table student_info modify class int;
+Rename table student_info to info_student;
+drop table info_student;
