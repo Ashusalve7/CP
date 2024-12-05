@@ -1,0 +1,61 @@
+
+#Number function
+select abs(-259) from dual;
+select ceil(28.79) from dual;
+select exp(287.9) from dual;
+select ln(100000) from dual;
+select log(10,20) from dual;
+select mod(5,15) from dual;
+select power(10,10) from dual;
+select round(12.222222221) from dual;
+select sign(-11) from dual;
+select sin(90) from dual;
+select sqrt(4) from dual;
+select greatest(10,20,202,2131,1212121) from dual;
+select least(10,20,202,2131,1212121) from dual;
+
+#Aggregate function
+CREATE DATABASE Aggregate;
+use Aggregate;
+CREATE TABLE student_result(
+    studentID int,
+	student_name varchar(20),
+    Marks int);
+select avg(Marks) from student_result;
+select count(Marks) from student_result;
+select min(Marks) from student_result;
+select max(Marks) from student_result;
+select sum(Marks) from student_result;
+
+#Character function
+select concat('Hello','world');
+select replace('black','b','s');
+select lower("HELLO WORLD");
+select upper("JA, mein name ist bin hitler");
+select substring('Hitter',1,3);
+select trim(" kaffee und wasser bitte ");
+select lpad('100','5','*');
+select rpad('100','5','*');
+
+#conversion function
+SELECT NOW();
+SELECT DATE_FORMAT(NOW(), '%d/%m/%y') AS formatted_date;
+SELECT STR_TO_DATE('12 February 2300', '%d %M %Y') AS converted_date;
+SELECT CAST('500' AS UNSIGNED) AS converted_number;
+SELECT DATE(NOW()) AS truncated_to_day;
+SELECT DATE_FORMAT(NOW(), '%Y-01-01') AS truncated_to_year;
+
+#date function
+select now();
+select curdate();
+select curtime();
+SELECT DATE_ADD('1988-01-02', INTERVAL 3 DAY);
+SELECT DAYOFMONTH('1988-01-02');
+SELECT DAYOFWEEK('1988-01-02');
+SELECT DAYOFYEAR('1988-01-02');
+SELECT HOUR('10:05:02');
+SELECT MONTH('1988-01-02');
+SELECT MONTHNAME('1988-01-02');
+SELECT DATEDIFF('1988-04-21', '1988-01-02');
+
+
