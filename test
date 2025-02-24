@@ -33,3 +33,19 @@ for password in passwords:
         print(f"Failed: {password}")
 
 driver.quit()
+
+
+
+
+from selenium import webdriver
+import time
+
+# Start WebDriver
+driver = webdriver.Chrome()
+
+# Open Instagram Login Page
+driver.get("https://www.instagram.com/accounts/login/")
+time.sleep(5)
+
+driver.quit()
+
